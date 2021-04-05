@@ -120,22 +120,17 @@ app.get('/profile', (req, res) => {
   }
 })
 
-app.post('/search', bodyParser.urlencoded({extended: false}), (req, res, next) => {
-  console.log(req);
-  next()
-})
 */
 
 
 app.use(bodyParser.urlencoded({extended: false})
   );
 
+// Challenge #12:Get Data from POST Requests
 
-
-
-
-
-
-
+app.post('/name', (req, res) => {
+  let string = req.body.first + " " + req.body.last
+  res.json({name: string})
+});
 
  module.exports = app;
