@@ -38,13 +38,45 @@ app.get("/json", (req, res) => {
   else {
   res.json(message)}});
 
+// Challenge #8 Chain Middleware to Create a Time Server
+/*
+// Main Solution
+app.get('/now', (req, res, next) => {
+  req.time = new Date().toString()
+  next()
+}, (req, res) => { res.json({time: req.time})
+});
+*/
+
+// Alternative Solution
+function getCurrentTimeString() {
+  return new Date().toString();
+}
+app.get("/now", function(req, res, next) {
+  req.time = getCurrentTimeString();
+  next;
+}, function(req, res) {
+  res.json({time: req.time});
+})
 
 
-
-
-
-
-
+// Challenge #9 Get Route Parameter Input from the Client
+/*
+// Prototype code
+app.get("/profile/:name", (req, res) => {
+  let name =req.params.name;
+  if (people[name]) {
+    res.json(people[name])
+  } else {
+    res.json('Not Found')
+  }
+});
+*/
+app.get("/:word/echo", (req, res) => {
+  console.log(req.params.word);
+  res.json({echo: req.params.word})
+  }
+);
 
 
 
