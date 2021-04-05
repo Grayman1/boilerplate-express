@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+let bodyParser = require('body-parser');
 // Challenge #7 Implement a Root-Level Request Logger Middleware
 
 app.use(function(req, res, next) {
@@ -79,13 +80,52 @@ app.get("/:word/echo", (req, res) => {
 );
 
 
+let people = {
+  'alice': {name: 'Alice', age: 22},
+  'bob': {name: 'Bob', age: 27},
+  'charlie': {name: 'Charlie', age: 25}
+}
+// Challenge 10 Get Query Parameter Input from the Client
+/*
+route_path: '/library'
+actual_request_URL: '/library?userId=546&bookId=6754'
+req.query: {userId: '546', bookId: '6754'}
+API endpoint, mounted at GET /name.
+structure { name: 'firstname lastname'}
+first=firstname&last=lastname
+you can use the method app.route(path).get(handler).post(handler)
+*/
+app.get('/name', (req, res) => {
+  let string = req.query.first + " " + req.query.last
+  res.json({name: string})
+});
 
+// Challenge #11 -- Use body-parser to Parse POST Requests
+/*
+- Install body-parser module in package.json
+- Require body-parser
+- Add middleware (bodyParser.urlencoded({extended: false}))
+-  Pass to app.use()
 
+*/
+/*
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html')
+})
 
+app.get('/profile', (req, res) => {
+  let name = req.query.name
+  if (people[name]) {
+    res.json(people[name])
+  }
+})
 
-
-
-
+app.post('/search', bodyParser.urlencoded({extended: false}), (req, res, next) => {
+  console.log(req);
+  next()
+})
+*/
+app.use(bodyParser.urlencoded({extended: false}));
 
 
 
